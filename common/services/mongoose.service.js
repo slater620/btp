@@ -15,7 +15,7 @@ const options = {
 //mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000
 const connectWithRetry = () => {
     console.log('MongoDB connection with retry')
-    mongoose.connect("mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000", options).then(()=>{
+    mongoose.connect("mongodb+srv://borel:bonjour4gi@cluster0.zxkje.mongodb.net/Cluster0?retryWrites=true&w=majority", options).then(()=>{
         console.log('MongoDB is connected')
     }).catch(err=>{
         console.log('MongoDB connection unsuccessful, retry after 5 seconds. ', ++count);
