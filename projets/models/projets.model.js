@@ -1,6 +1,6 @@
 const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
-
+const TacheModel=require('../../taches/models/taches.model');
 const ProjetSchema = new Schema({
     nom: String,
     description: String,
@@ -70,6 +70,10 @@ exports.patchProjet = (id, ProjetData) => {
 };
 
 exports.removeById = (ProjetId) => {
+    var l=TacheModel.findByProjet(ProjetId);
+    for (let i=0; i<l.length; i++) {
+        TacheModel.removeById(l[i]._id);
+    }
     return new Promise((resolve, reject) => {
         Projet.deleteMany({_id: ProjetId}, (err) => {
             if (err) {

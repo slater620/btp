@@ -55,6 +55,7 @@ exports.patchById = (req, res) => {
 };
 
 exports.removeById = (req, res) => {
+    
     ProjetModel.removeById(req.params.ProjetId)
         .then((result)=>{
             res.status(204).send({});

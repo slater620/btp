@@ -12,21 +12,21 @@ const StocksRouter=require('./stocks/routes.config');
 const AllocationRouter = require('./allocations/routes.config')
 const test=require('./notifications/mailSender/sendMail');
 const notif=require('./notifications/Jobs/jobs');
-const TypeRouter=require('./types/routes.config');
+// const TypeRouter=require('./types/routes.config');
 const CommandeRouter= require('./commandes/routes.config');
 
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-    res.header('Access-Control-Expose-Headers', 'Content-Length');
-    res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    } else {
-        return next();
-    }
-});
+// app.use(function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+//     res.header('Access-Control-Expose-Headers', 'Content-Length');
+//     res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
+//     if (req.method === 'OPTIONS') {
+//         return res.sendStatus(200);
+//     } else {
+//         return next();
+//     }
+// });
 
 app.use(express.json());
 AuthorizationRouter.routesConfig(app);
@@ -36,7 +36,7 @@ AllocationRouter.routesConfig(app);
 TachesRouter.routesConfig(app);
 StocksRouter.routesConfig(app);
 ProjectRouter.routesConfig(app);
-TypeRouter.routesConfig(app);
+// TypeRouter.routesConfig(app);
 CommandeRouter.routesConfig(app);
 
 app.set('port',(process.env.PORT || config.port));
