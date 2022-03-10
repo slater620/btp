@@ -7,7 +7,6 @@ const StockSchema = new Schema(
     quantite: Number,
     prix: Number,
     type: {
-      type: mongoose.Schema.Types.ObjectId,
       enum:["Materiel","Materiau","Autre"],
       required: true,
     },
