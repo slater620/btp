@@ -10,8 +10,8 @@ const fetch=require("node-fetch");
 
 exports.routesConfig = function (app) {
     app.post('/Stocks', [
-        //ValidationMiddleware.validJWTNeeded,
-       // PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        ValidationMiddleware.validJWTNeeded,
+       PermissionMiddleware.minimumPermissionLevelRequired(FREE),
         StocksController.insert
     ]);
     

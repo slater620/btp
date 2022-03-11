@@ -77,13 +77,17 @@ exports.patchStock = (id, StockData) => {
   );
 };
 
-exports.patchStockRemove = (id, quantite) => {
-  var res = Stock.findById(id).then((result) => {
+exports.patchStockRemove = async (id, quantite) => {
+  //console.log(id);
+  var res = await Stock.findById(id).then((result) => {
+    //console.log(result);
     result = result.toJSON();
     delete result._id;
     delete result.__v;
+    //console.log(result);
     return result;
   });
+  //console.log(res);
   res.quantite = res.quantite - quantite;
   if (res.quantite >= 0)
     return Stock.findOneAndUpdate(

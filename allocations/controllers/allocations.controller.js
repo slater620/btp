@@ -1,6 +1,7 @@
 const AllocationModel = require('../models/allocations.model');
 
 exports.insert = (req, res) => {
+    console.log(req.body);
     AllocationModel.createAllocation(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});
@@ -35,7 +36,7 @@ exports.getById = (req, res) => {
 exports.patchById = (req, res) => {
     AllocationModel.patchAllocation(req.params.AllocationId, req.body)
         .then((result) => {
-            res.status(204).send({});
+            res.status(204).send({res:12});
         }).catch(e=>{
             res.status(400).send({error: e.message});
         });

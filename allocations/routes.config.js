@@ -17,8 +17,7 @@ exports.routesConfig = function (app) {
     
     app.get('/Allocations', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(PAID),
-        PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+       PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
         AllocationsController.list
     ]);
     app.get('/Allocations/:AllocationId', [

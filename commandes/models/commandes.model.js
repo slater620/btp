@@ -43,8 +43,8 @@ exports.findById = (id) => {
 };
 
 exports.createCommande = (CommandeData) => {
-    const Commande = new Commande(CommandeData);
-    return Commande.save();
+    const commande = new Commande(CommandeData);
+    return commande.save();
 };
 
 exports.list = (perPage, page) => {
@@ -80,3 +80,4 @@ exports.removeById = (CommandeId) => {
     });
 };
 
+Commande.createIndexes();
