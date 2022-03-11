@@ -9,8 +9,9 @@ const FREE = config.permissionLevels.NORMAL_USER;
 const fetch=require("node-fetch");
 
 exports.routesConfig = function (app) {
-    app.post('/Stocks', [ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    app.post('/Stocks', [
+        //ValidationMiddleware.validJWTNeeded,
+       // PermissionMiddleware.minimumPermissionLevelRequired(FREE),
         StocksController.insert
     ]);
     

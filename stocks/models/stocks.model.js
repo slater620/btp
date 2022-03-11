@@ -7,6 +7,7 @@ const StockSchema = new Schema(
     quantite: Number,
     prix: Number,
     type: {
+      type:String,
       enum:["Materiel","Materiau","Autre"],
       required: true,
     },
