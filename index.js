@@ -3,6 +3,9 @@ const config = require('./common/config/env.config.js');
 const express = require('express');
 const app = express();
 const cors=require('cors');
+var corsOptions = {
+    origin: "https://btp-gestion-app.herokuapp.com"
+};
 
 const taches= require('./taches/models/taches.model');
 const AuthorizationRouter = require('./authorization/routes.config');
@@ -17,9 +20,9 @@ const notif=require('./notifications/Jobs/jobs');
 // const TypeRouter=require('./types/routes.config');
 const CommandeRouter= require('./commandes/routes.config');
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', "https://btp-gestion-app.herokuapp.com");
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
     res.header('Access-Control-Expose-Headers', 'Content-Length');
