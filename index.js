@@ -4,7 +4,8 @@ const express = require('express');
 const app = express();
 const cors=require('cors');
 var corsOptions = {
-    origin: "https://btp-gestion-app.herokuapp.com"
+    //origin: "https://btp-gestion-app.herokuapp.com"
+    origin: "*"
 };
 
 const taches= require('./taches/models/taches.model');
