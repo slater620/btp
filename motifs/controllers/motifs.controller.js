@@ -1,16 +1,11 @@
-const UserModel = require('../models/users.model');
-const crypto = require('crypto');
+const MotifModel = require('../models/motifs.model');
 
 exports.insert = (req, res) => {
-    let salt = crypto.randomBytes(16).toString('base64');
-    let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-    req.body.password = salt + "$" + hash;
-    req.body.permissionLevel = 1;
-    UserModel.createUser(req.body)
+    MotifModel.createMotif(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});
-        }).catch((e)=>{
-            res.status(403).send({message: 'bad request user with this mail already exist'});
+        }).catch(e=>{
+            res.status(400).send({error: e.message});
         });
 };
 
@@ -23,7 +18,7 @@ exports.list = (req, res) => {
             page = Number.isInteger(req.query.page) ? req.query.page : 0;
         }
     }
-    UserModel.list(limit, page)
+    MotifModel.list(limit, page)
         .then((result) => {
             res.status(200).send(result);
         }).catch(e=>{
@@ -32,34 +27,46 @@ exports.list = (req, res) => {
 };
 
 exports.getById = (req, res) => {
-    UserModel.findById(req.params.userId)
+    MotifModel.findById(req.params.MotifId)
         .then((result) => {
             res.status(200).send(result);
         }).catch(e=>{
             res.status(400).send({error: e.message});
         });
 };
-exports.patchById = (req, res) => {
-    if (req.body.password) {
-        let salt = crypto.randomBytes(16).toString('base64');
-        let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-        req.body.password = salt + "$" + hash;
-    }
 
-    UserModel.patchUser(req.params.userId, req.body)
+exports.getByUser = (req, res) => {
+    MotifModel.findByUser(req.params.userId)
+        .then((result) => {
+            res.status(200).send(result);
+        }).catch(e=>{
+            res.status(400).send({error: e.message});
+        });
+};
+
+exports.patchById = (req, res) => {
+    MotifModel.patchMotif(req.params.MotifId, req.body)
         .then((result) => {
             res.status(204).send({});
         }).catch(e=>{
             res.status(400).send({error: e.message});
         });
-
 };
 
 exports.removeById = (req, res) => {
-    UserModel.removeById(req.params.userId)
+    MotifModel.removeById(req.params.MotifId)
         .then((result)=>{
             res.status(204).send({});
         }).catch(e=>{
             res.status(400).send({error: e.message});
         });
 };
+
+exports.deleteById=(req, res)=>{
+    MotifModel.patchMotifRemove(req.params.MotifId,req.params.MotifQuantite)
+    .then((result)=>{
+        res.status(204).send(result);
+    }).catch(e=>{
+        res.status(400).send({error: e.message});
+    });
+}

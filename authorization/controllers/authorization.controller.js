@@ -24,6 +24,6 @@ exports.refresh_token = (req, res) => {
         let token = jwt.sign(req.body, jwtSecret);
         res.status(201).send({id: token});
     } catch (err) {
-        res.status(500).send({errors: err});
+        res.status(500).send({errors: err.message});
     }
 };

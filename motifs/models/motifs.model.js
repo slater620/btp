@@ -1,47 +1,38 @@
 const mongoose = require("../../common/services/mongoose.service").mongoose;
 const Schema = mongoose.Schema;
 
-const StockSchema = new Schema(
+const MotifSchema = new Schema(
   {
-    nom: String,
-    denomination: String,//unite
-    quantite: Number,
-    prixUnitaire: Number,
-    type: {
-      type:String,
-      enum:["Materiel","Materiau","Autre"],
-      required: true,
-    },
-    dateApprovisionnement: Date,
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
+    motif: String,
+    stock: { type: mongoose.Schema.Types.ObjectId, ref: "Stocks" },
   },
   { timestamps: true }
 );
 
-StockSchema.virtual("id").get(function () {
+MotifSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
 // Ensure virtual fields are serialised.
-StockSchema.set("toJSON", {
+MotifSchema.set("toJSON", {
   virtuals: true,
 });
 
-StockSchema.findById = function (cb) {
-  return this.model("Stocks").find({ id: this.id }, cb);
+MotifSchema.findById = function (cb) {
+  return this.model("Motifs").find({ id: this.id }, cb);
 };
 
-const Stock = mongoose.model("Stocks", StockSchema);
+const Motif = mongoose.model("Motifs", MotifSchema);
 
 exports.findByNom = (nom) => {
-  return Stock.find({ nom: nom });
+  return Motif.find({ nom: nom });
 };
 
 exports.findByUser = (user) => {
-  return Stock.find({ user: user });
+  return Motif.find({ user: user });
 };
 exports.findById = (id) => {
-  return Stock.findById(id).then((result) => {
+  return Motif.findById(id).then((result) => {
     result = result.toJSON();
     delete result._id;
     delete result.__v;
@@ -49,38 +40,38 @@ exports.findById = (id) => {
   });
 };
 
-exports.createStock = (StockData) => {
-  const stock = new Stock(StockData);
-  return stock.save();
+exports.createMotif = (MotifData) => {
+  const motif = new Motif(MotifData);
+  return motif.save();
 };
 
 exports.list = (perPage, page) => {
   return new Promise((resolve, reject) => {
-    Stock.find()
+    Motif.find()
       .limit(perPage)
       .skip(perPage * page)
-      .exec(function (err, Stocks) {
+      .exec(function (err, Motifs) {
         if (err) {
           reject(err);
         } else {
-          resolve(Stocks);
+          resolve(Motifs);
         }
       });
   });
 };
 
-exports.patchStock = (id, StockData) => {
-  return Stock.findOneAndUpdate(
+exports.patchMotif = (id, MotifData) => {
+  return Motif.findOneAndUpdate(
     {
       _id: id,
     },
-    StockData
+    MotifData
   );
 };
 
-exports.patchStockRemove = async (id, quantite) => {
+exports.patchMotifRemove = async (id, quantite) => {
   //console.log(id);
-  var res = await Stock.findById(id).then((result) => {
+  var res = await Motif.findById(id).then((result) => {
     //console.log(result);
     result = result.toJSON();
     delete result._id;
@@ -91,20 +82,20 @@ exports.patchStockRemove = async (id, quantite) => {
   //console.log(res);
   res.quantite = res.quantite - quantite;
   if (res.quantite >= 0)
-    return Stock.findOneAndUpdate(
+    return Motif.findOneAndUpdate(
       {
         _id: id,
       },
       res
     );
   else
-      throw new Error("failed to remove stocks");
+      throw new Error("failed to remove Motifs");
   //return { status: "remove failed" };
 };
 
-exports.removeById = (StockId) => {
+exports.removeById = (MotifId) => {
   return new Promise((resolve, reject) => {
-    Stock.deleteMany({ _id: StockId }, (err) => {
+    Motif.deleteMany({ _id: MotifId }, (err) => {
       if (err) {
         reject(err);
       } else {

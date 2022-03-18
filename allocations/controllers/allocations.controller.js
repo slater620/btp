@@ -31,6 +31,8 @@ exports.getById = (req, res) => {
     AllocationModel.findById(req.params.AllocationId)
         .then((result) => {
             res.status(200).send(result);
+        }).catch(e=>{
+            res.status(400).send({error: e.message});
         });
 };
 exports.patchById = (req, res) => {
@@ -46,5 +48,7 @@ exports.removeById = (req, res) => {
     AllocationModel.removeById(req.params.AllocationId)
         .then((result)=>{
             res.status(204).send({});
+        }).catch(e=>{
+            res.status(400).send({error: e.message});
         });
 };

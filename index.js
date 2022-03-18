@@ -20,6 +20,7 @@ const test=require('./notifications/mailSender/sendMail');
 const notif=require('./notifications/Jobs/jobs');
 // const TypeRouter=require('./types/routes.config');
 const CommandeRouter= require('./commandes/routes.config');
+const MotifRouter=require('./motifs/routes.config');
 
 app.use(cors(corsOptions));
 app.use(function (req, res, next) {
@@ -46,6 +47,7 @@ StocksRouter.routesConfig(app);
 ProjectRouter.routesConfig(app);
 // TypeRouter.routesConfig(app);
 CommandeRouter.routesConfig(app);
+MotifRouter.routesConfig(app);
 
 app.set('port',(process.env.PORT || config.port));
 
