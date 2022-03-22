@@ -3,8 +3,12 @@ const Schema = mongoose.Schema;
 
 const CommandeSchema = new Schema({
     description: String,
-    quantite:Number,
+    quantiteDemande:Number,
+    quantiteRecu:Number,
     prix:Number,
+    coutTransport:Number,
+    DureeReapprovisionnement:String,
+    denomination:String,
     stock:{ type: mongoose.Schema.Types.ObjectId, ref: "Stocks",required: true},
     dateCommande:Date,
     dateArrivee:Date
