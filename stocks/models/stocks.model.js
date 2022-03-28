@@ -46,7 +46,10 @@ exports.findById = (id) => {
     delete result._id;
     delete result.__v;
     return result;
-  });
+  }).catch(e=>{
+    console.log(e.message);
+    return [];
+});
 };
 
 exports.createStock = (StockData) => {
@@ -87,7 +90,10 @@ exports.patchStockRemove = async (id, quantite) => {
     delete result.__v;
     //console.log(result);
     return result;
-  });
+  }).catch(e=>{
+    console.log(e.message);
+    return [];
+});
   //console.log(res);
   res.quantite = res.quantite - quantite;
   if (res.quantite >= 0)

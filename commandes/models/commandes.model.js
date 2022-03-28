@@ -43,6 +43,9 @@ exports.findById = (id) => {
             delete result._id;
             delete result.__v;
             return result;
+        }).catch(e=>{
+            console.log(e.message);
+            return [];
         });
 };
 

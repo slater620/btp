@@ -1,6 +1,6 @@
 const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
-
+const AllocModel=require('../../allocations/models/allocations.model');
 const TacheSchema = new Schema({
     nom: String,
     projet: { type: mongoose.Schema.Types.ObjectId, ref: "Projets" },
@@ -38,6 +38,9 @@ exports.findById = (id) => {
             delete result._id;
             delete result.__v;
             return result;
+        }).catch(e=>{
+            console.log(e.message);
+            return [];
         });
 };
 
@@ -82,6 +85,11 @@ exports.patchTache = (id, TacheData) => {
 };
 
 exports.removeById = (TacheId) => {
+    var l=AllocModel.findByTache(TacheId);
+    for (let i=0; i<l.length; i++) {
+        AllocModel.removeById(l[i]._id);
+    }
+    
     return new Promise((resolve, reject) => {
         Tache.deleteMany({_id: TacheId}, (err) => {
             if (err) {
