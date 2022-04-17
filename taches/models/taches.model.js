@@ -6,8 +6,7 @@ const TacheSchema = new Schema({
     projet: { type: mongoose.Schema.Types.ObjectId, ref: "Projets" },
     dateDebut:Date,
     dateFin:Date,
-    actif:{type:Boolean,default:true},
-    description: { type: String }        
+    actif:{type:Boolean,default:true},       
 },
 { timestamps: true });
 

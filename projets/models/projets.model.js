@@ -1,9 +1,10 @@
 const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 const TacheModel=require('../../taches/models/taches.model');
+const StockModel=require('../../stocks/models/stocks.model');
+
 const ProjetSchema = new Schema({
     nom: String,
-    description: String,
     user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
 }
 ,
@@ -76,6 +77,10 @@ exports.removeById = (ProjetId) => {
     var l=TacheModel.findByProjet(ProjetId);
     for (let i=0; i<l.length; i++) {
         TacheModel.removeById(l[i]._id);
+    }
+    var l2=StockModel.findByProjet(ProjetId);
+    for(let i=0; i<l2.length; i++) {
+        StockModel.removeById(l2[i]._id);
     }
     return new Promise((resolve, reject) => {
         Projet.deleteMany({_id: ProjetId}, (err) => {

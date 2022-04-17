@@ -5,8 +5,7 @@ const AllocationSchema = new Schema({
     quantiteInitiale: Number,
     quantitRestante: Number,
     tache: { type: mongoose.Schema.Types.ObjectId, ref: "Taches" },
-    stock: { type: mongoose.Schema.Types.ObjectId, ref: "Stocks" },
-    description: { type: String }        
+    stock: { type: mongoose.Schema.Types.ObjectId, ref: "Stocks" }       
 },
 { timestamps: true });
 

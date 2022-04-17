@@ -27,10 +27,10 @@ exports.routesConfig = function (app) {
     ]);
 
 
-    app.get('/Stocks/user/:userId', [
+    app.get('/Stocks/projet/:ProjetId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),
-        StocksController.getByUser
+        StocksController.getByProjetId
     ]);
 
     app.patch('/Stocks/:StockId', [

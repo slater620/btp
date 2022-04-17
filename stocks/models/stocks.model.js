@@ -9,11 +9,11 @@ const StockSchema = new Schema(
     prixUnitaire: Number,
     type: {
       type:String,
-      enum:["Materiel","Materiau","Autre"],
+      enum:["Materiel","Materiau"],
       required: true,
     },
-    dateApprovisionnement: Date,
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
+    projet:{type: mongoose.Schema.Types.ObjectId, ref: "Projets"},
+    dureeApprovisionnement: String
   },
   { timestamps: true }
 );
@@ -31,15 +31,18 @@ StockSchema.findById = function (cb) {
   return this.model("Stocks").find({ id: this.id }, cb);
 };
 
+
+
 const Stock = mongoose.model("Stocks", StockSchema);
 
 exports.findByNom = (nom) => {
   return Stock.find({ nom: nom });
 };
 
-exports.findByUser = (user) => {
-  return Stock.find({ user: user });
+exports.findByProjet = (projet) => {
+  return Stock.find({projet: projet}).sort({created_at:-1});
 };
+
 exports.findById = (id) => {
   return Stock.findById(id).then((result) => {
     result = result.toJSON();

@@ -35,14 +35,15 @@ exports.getById = (req, res) => {
         });
 };
 
-exports.getByUser = (req, res) => {
-    StockModel.findByUser(req.params.userId)
+exports.getByProjetId = (req, res) => {
+    StockModel.findByProjet(req.params.ProjetId)
         .then((result) => {
             res.status(200).send(result);
         }).catch(e=>{
             res.status(400).send({error: e.message});
         });
 };
+
 
 exports.patchById = (req, res) => {
     StockModel.patchStock(req.params.StockId, req.body)

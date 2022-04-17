@@ -2,16 +2,14 @@ const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 
 const CommandeSchema = new Schema({
-    description: String,
     quantiteDemande:Number,
-    quantiteRecu:Number,
     prix:Number,
+    projet: { type: mongoose.Schema.Types.ObjectId, ref: "Projets" },
     coutTransport:Number,
     DureeReapprovisionnement:String,
     denomination:String,
     stock:{ type: mongoose.Schema.Types.ObjectId, ref: "Stocks",required: true},
     dateCommande:Date,
-    dateArrivee:Date
  }
 ,
   { timestamps: true });
@@ -31,7 +29,9 @@ CommandeSchema.findById = function (cb) {
 
 const Commande = mongoose.model('Commandes', CommandeSchema);
 
-
+exports.findByProjet = (projet) => {
+    return Commande.find({projet: projet}).sort({created_at:-1});
+};
 
 exports.findByStock = (stock) => {
     return Commande.find({stock: stock});

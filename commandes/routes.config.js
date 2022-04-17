@@ -33,6 +33,12 @@ exports.routesConfig = function (app) {
         CommandesController.getByUser
     ]);
 
+    app.get('/Commandes/projet/:ProjetId', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        CommandesController.getByProjetId
+    ]);
+
     app.patch('/Commandes/:CommandeId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),

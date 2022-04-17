@@ -26,6 +26,15 @@ exports.list = (req, res) => {
         })
 };
 
+exports.getByProjetId = (req, res) => {
+    CommandeModel.findByProjet(req.params.ProjetId)
+        .then((result) => {
+            res.status(200).send(result);
+        }).catch(e=>{
+            res.status(400).send({error: e.message});
+        });
+};
+
 exports.getById = (req, res) => {
     CommandeModel.findById(req.params.CommandeId)
         .then((result) => {
